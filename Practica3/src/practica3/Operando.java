@@ -89,7 +89,7 @@ public class Operando extends Practica3{
           }
           
           }
-          
+           
           //IDX'S
           if(Operando.matches("^[-]*([0-9a-dA-D])*,([+|-])*([X|x|Y|y|sp|SP|pc|PC])*[+|-]*$")){
               banRel=true;
