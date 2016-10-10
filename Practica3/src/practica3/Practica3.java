@@ -29,7 +29,8 @@ public class Practica3 {
         thisLine = null;
         int poslin=0,c=0,pos=0,banbuffer=0,compara=0,banCod=0,sioperI=2;
         espacios es;
-        String etiqueta = null, codop = null, operando = null, comentario=null,linToken=null,codoplin=null,sioperS=null,codopprue=null;
+        Operando op;
+        String etiqueta = null, codop = null, operando = null, comentario=null,linToken=null,codoplin=null,sioperS=null,codopprue=null,Mdir=null;
         String exEt=null,exCod=null,moddir=null,codcal=null,bytescal=null,bytesxcal=null,totbytes=null,samecod=null,dircod=null,samecod2=null;
         Vector<String> cadena;
         cadena = new Vector<>();
@@ -67,6 +68,7 @@ public class Practica3 {
             instrucciones.newLine();
              while((thisLine = lectb.readLine()) != null && banEnd != true){ //empieza a leer las lineas en loop
                         es = new espacios();
+                        op = new Operando();
                         codop=" ";
 	            	operando=" ";
 	            	etiqueta=" ";
@@ -184,8 +186,12 @@ public class Practica3 {
                                            File fcod =new File(dircod);
                                            FileWriter fwcod=new FileWriter(fcod,true);
                                            BufferedWriter modosdir=new BufferedWriter(fwcod);
-                                           
-                                           modosdir.write(moddir+" ");
+                                           if(moddir.equals("INH")){
+                                               modosdir.write(moddir+" ");
+                                           }
+                                           if(moddir.equals("DTV")){
+                                               modosdir.write(moddir+" ");
+                                           }
                                            modosdir.close();
                                            }
                                        }
@@ -199,8 +205,8 @@ public class Practica3 {
                          }catch(Exception r){
                              System.out.println("Hubo un error en el Tabop "+r);
                          }
-                         banbuffer=0; 
-                         compara=0;
+                         //Etiqueta alterna
+                         
                          //etiqueta="null";
                          codopprue=linToken;
                          if(codopprue.matches("^[a-z]{1,4}")&&!"equ".equals(codopprue)&&espacio==false&&codopprue!=codop){
@@ -233,6 +239,9 @@ public class Practica3 {
                                      operando=linToken;
                                  //    System.out.println("Operando  "+operando);
                                     
+                                    Mdir = op.Direccion(operando,dir,c,moddir);
+                                     System.out.println("Modo "+Mdir);
+                                     
                                      if(codop.equals(" ")){
                                          
                                          codop=linToken;
@@ -267,7 +276,7 @@ public class Practica3 {
                                          if(linToken.matches("^[a-zA-Z]{1,8}[^;]{0,1}[\\w]$")&&banCom==false&&codop!=linToken)
                                          {
                                              
-                                            System.out.println("Lin token eti: "+linToken);
+                                           // System.out.println("Lin token eti: "+linToken);
                                            // etiqueta=linToken;
                                             if(poslin!=0&&thisLine.charAt(poslin)!=' '&&poslin>2){
                                             //   System.out.println("com pos"+thisLine.charAt(poslin)+"Npos "+poslin);
