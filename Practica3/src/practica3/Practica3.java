@@ -192,6 +192,9 @@ public class Practica3 {
                                            if(moddir.equals("DTV")){
                                                modosdir.write(moddir+" ");
                                            }
+                                           if(moddir.equals("INM")&&sioperI==0){
+                                               modosdir.write(moddir+" ");
+                                           }
                                            modosdir.close();
                                            }
                                        }
@@ -239,8 +242,9 @@ public class Practica3 {
                                      operando=linToken;
                                  //    System.out.println("Operando  "+operando);
                                     
-                                    Mdir = op.Direccion(operando,dir,c,moddir);
-                                     System.out.println("Modo "+Mdir);
+                                    Mdir = op.Direccion(operando,dir,c,moddir,codop);
+                                    
+                                     System.out.println("Modo de direccion "+Mdir);
                                      
                                      if(codop.equals(" ")){
                                          
@@ -366,23 +370,28 @@ public class Practica3 {
                                  error.newLine();
                                  errBan=true;
                              }
+                     
                      if(banCod==1&&errBan==false){
                       
                      samecod2=codop+a;
                      //System.out.println("codop arch: "+samecod2);
                      if(samecod2!="null.asm")
                      {
+                         
                       File f2 =new File(samecod2);
                       FileInputStream fcod2 = new FileInputStream(samecod2);
                       DataInputStream inputcod2 = new DataInputStream(fcod2);
                       BufferedReader brcod2 = new BufferedReader(new InputStreamReader(inputcod2));
                       codoplin=brcod2.readLine();//imprime los modos de direccionamiento
-                      
-                      
+                      if(Mdir!=null){
+                          codoplin=Mdir;
+                      }
+                      if(codoplin!="null"){
                       
                 //  System.out.println(c+"  ee  "+etiqueta+"  cc  "+codop+"  oo  "+operando);
                   instrucciones.write(c+"      "+etiqueta+"      "+codop+"      "+operando+"      "+codoplin);
                   instrucciones.newLine();
+                      }
                   brcod2.close();
                   f2.delete();
                        }
@@ -414,6 +423,7 @@ public class Practica3 {
                      banderalim=false;
                      banCod=0;
                      sioperI=2;
+                     Mdir=null;
                      if(codop.equals("END")||codop.equals("End")||codop.equals("end")){//verifica si tiene End
                            banEnd = true;
                        }
