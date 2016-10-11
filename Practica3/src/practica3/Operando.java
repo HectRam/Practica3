@@ -19,16 +19,17 @@ public class Operando extends Practica3{
     
     String Direccion(String Operando,String dir, int lin,String moddir,String codop){
         
-        String  b=".err",Mdir=null;
+        String  b=".err",Mdir="null";
+        
         boolean banRel=false;
         try{
-       /* File f =new File(dir+b);
+        File f =new File(dir+b);
         FileWriter fw=new FileWriter(f,true);
         BufferedWriter error=new BufferedWriter(fw);
-        */
-          //  System.out.println("Operando antes: "+Operando);
-      if(Operando.matches("^\\%.*")||Operando.matches("^\\@.*")||Operando.matches("\\$.*")||Operando.matches("^\\#.*")||Operando.matches("^[0-9]+")||Operando.matches("^[a-zA-Z]+")||Operando.matches("^\\[.*")){
-       /*   
+        
+           // System.out.println("Codop antes: "+codop);
+      if(Operando.matches("^\\%.*")||Operando.matches("^\\@.*")||Operando.matches("\\$.*")||Operando.matches("^\\#.*")||Operando.matches("^[0-9]+")||Operando.matches("^[a-zA-Z]+")||Operando.matches("^\\[.*")||Operando.matches("^\\-.*")||Operando.matches("^\\,.*")){
+          /*   
           int x = 32678;  
           int y = ~x;   
           int z = y + 1;
@@ -91,10 +92,11 @@ public class Operando extends Practica3{
           }
            
           ///////////////////////////////////////////////////Indexados   IDX'S
-          if(Operando.matches("^[-]*([0-9a-dA-D])*,([+|-])*([X|x|Y|y|sp|SP|pc|PC])*[+|-]*$")){
+          if(Operando.matches("^[-]*([0-9a-dA-D])*^,*([+|-])*([X|x|Y|y|sp|SP|pc|PC])*[+|-]*$")){
               banRel=true;
               String IDXcad=null;
               StringTokenizer IDX=new StringTokenizer(Operando,",");
+              System.out.println("OperIdx: "+Operando);
               IDXcad =IDX.nextToken();
               if(IDXcad.matches("[a|A|b|B|d|D]")){
                   Mdir="IDX A";//Acumulador
@@ -130,10 +132,17 @@ public class Operando extends Practica3{
           }
           
           /////////////////////////////////////////////////////////////16 Bits Indirecto
+          if(Operando.matches("^\\[[-0-9]*.*")){
+              System.out.println("Operando[]: "+Operando);
           if(Operando.matches("\\[([0-9])*,([X|x|Y|y|sp|SP|pc|PC])*\\]")){
               
               Mdir="[IDX2]";
+          }else{
+              error.write("Linea: "+lin+" Error el Operando no cumple los requerimientos para [IDX2] contiene: "+Operando);
+              error.newLine();
               
+              
+          }
           }
           ////////////////////////////////////////////////////////////Indexado Indirecto de Acumulador
           if(Operando.matches("\\[([D|d])*,([X|x|Y|y|sp|SP|pc|PC])*\\]")){
@@ -191,7 +200,7 @@ public class Operando extends Practica3{
           if(Operando.matches("^[0-9a-zA-Z].*")&&banRel==false||Operando.matches("^\\@.*")&&banRel==false||Operando.matches("^\\%.*")&&banRel==false||Operando.matches("^\\$.*")&&banRel==false){
               int REL=0;
               int tam=Operando.length();
-             System.out.println("moddir: "+moddir);
+           //  System.out.println("moddir: "+moddir);
               if(Operando.matches("^\\@.*")||Operando.matches("^\\%.*")||Operando.matches("^\\$.*"))
                 {
                     
@@ -254,13 +263,13 @@ public class Operando extends Practica3{
          
       } 
        else{
-          /*
+          
           error.write("Linea: "+lin+" Error el modo de Ddireccionamiento no es valido");
           error.newLine();
-          */
+          
       }
        
-          
+          error.close();
         
         }catch(Exception e){
             System.out.println("Hubo un problema en los modos de direccionamiento: "+e);
@@ -269,5 +278,4 @@ public class Operando extends Practica3{
         
       return Mdir;
     }
-    
 }
