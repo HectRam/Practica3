@@ -26,19 +26,19 @@ public class Operando extends Practica3{
         FileWriter fw=new FileWriter(f,true);
         BufferedWriter error=new BufferedWriter(fw);
         */
-            System.out.println("Operando antes: "+Operando);
+          //  System.out.println("Operando antes: "+Operando);
       if(Operando.matches("^\\%.*")||Operando.matches("^\\@.*")||Operando.matches("\\$.*")||Operando.matches("^\\#.*")||Operando.matches("^[0-9]+")||Operando.matches("^[a-zA-Z]+")||Operando.matches("^\\[.*")){
        /*   
           int x = 32678;  
           int y = ~x;   
           int z = y + 1;
         */  
-          System.out.println("Codop mod: "+codop);
+          //System.out.println("Codop mod: "+codop);
           //System.out.println("A2: "+z);
           //Directo
           if(Operando.matches("^\\%.+")||Operando.matches("^\\@[0-7]+")||Operando.matches("\\$[0-9A-Fa-f]*")||Operando.matches("^[0-9]+")){
           //DIR
-              
+             
               if(moddir.equals("DTV")){
                   Mdir=moddir;
               }else{
@@ -56,16 +56,16 @@ public class Operando extends Practica3{
               }
           if(Operando.matches("\\%.*")){
               
-              System.out.println("Binario "+Operando);
+             // System.out.println("Binario "+Operando);
           }else{
               if(Operando.matches("\\@.*")){
                   
-                  System.out.println("Octal "+Operando);
+                  //System.out.println("Octal "+Operando);
               }else{
                   if(Operando.matches("\\$[0-9A-Fa-f]*"))
                   {
                       banRel=true;
-                      System.out.println("Hexadecimal"+Operando);
+                    //  System.out.println("Hexadecimal"+Operando);
                        String Hexcad=Operando.substring(1,tam);
                        int EXT=Integer.parseInt(Hexcad,16);
                        if(EXT>=256){
@@ -81,7 +81,7 @@ public class Operando extends Practica3{
                               Mdir="Ext";
                           }
                       }
-                      System.out.println("Decimal"+Operando);
+                    //  System.out.println("Decimal"+Operando);
                   }
                   
               }
@@ -90,7 +90,7 @@ public class Operando extends Practica3{
           
           }
            
-          //IDX'S
+          ///////////////////////////////////////////////////Indexados   IDX'S
           if(Operando.matches("^[-]*([0-9a-dA-D])*,([+|-])*([X|x|Y|y|sp|SP|pc|PC])*[+|-]*$")){
               banRel=true;
               String IDXcad=null;
@@ -129,19 +129,19 @@ public class Operando extends Practica3{
               }
           }
           
-          //16 Bits Indirecto
+          /////////////////////////////////////////////////////////////16 Bits Indirecto
           if(Operando.matches("\\[([0-9])*,([X|x|Y|y|sp|SP|pc|PC])*\\]")){
               
               Mdir="[IDX2]";
               
           }
-          //Indexado Indirecto de Acumulador
+          ////////////////////////////////////////////////////////////Indexado Indirecto de Acumulador
           if(Operando.matches("\\[([D|d])*,([X|x|Y|y|sp|SP|pc|PC])*\\]")){
               Mdir="[D,IDX]";
               
           }
           
-          //Inmediato IMM8, IMM16
+          ////////////////////////////////////////////////////////////Inmediato IMM8, IMM16
           if(Operando.matches("^#.+")){
               
               int IMM=0;
@@ -156,37 +156,97 @@ public class Operando extends Practica3{
               
               if(IMM<=255||-256<=IMM){
                   //System.out.println("Entro A imm8");
+                  if(moddir.equals("INM")){
                   Mdir="IMM8";
                   //return Mdir;
+                  }
               }
               else if(IMM<=65535||-32768<=IMM){
                   //System.out.println("Entro A imm16");
+                  if(moddir.equals("INM")){
                   Mdir="IMM16";
                   //return Mdir;
+                  }
               }
                 }else{//sin base 
                   IMM =Integer.parseInt(immcad, 16);
                   if(IMM<=255||-256<=IMM){
                   //System.out.println("Entro A imm8");
+                      if(moddir.equals("INM")){
                   Mdir="IMM8";
                   //return Mdir;
+                      }
                   }
-                  if(IMM<=65535||-32768<=IMM){
-                   //System.out.println("Entro A imm16");    
+                  else if(IMM<=65535||-32768<=IMM){
+                   //System.out.println("Entro A imm16");
+                      if(moddir.equals("INM")){
                   Mdir="IMM16";
                   //return Mdir;
+                      }
                   }
               }
           }
           
-          //REL8
-          if(Operando.matches("^[0-9a-zA-Z].*")&&banRel==false){
-              
-              if(codop.matches("^[lL].*")){
-                  Mdir="REL16";
-              }else{
-              Mdir="REL8";
+          /////////////////////////////////////////////////////////////////////Relativo REL8 & REL16
+          if(Operando.matches("^[0-9a-zA-Z].*")&&banRel==false||Operando.matches("^\\@.*")&&banRel==false||Operando.matches("^\\%.*")&&banRel==false||Operando.matches("^\\$.*")&&banRel==false){
+              int REL=0;
+              int tam=Operando.length();
+             System.out.println("moddir: "+moddir);
+              if(Operando.matches("^\\@.*")||Operando.matches("^\\%.*")||Operando.matches("^\\$.*"))
+                {
+                    
+              String relcad=Operando.substring(1,tam);
+              REL =Integer.parseInt(relcad, 16);
+              if(REL<=255||REL>=-256){
+                  if(codop.matches("^[lL].*")){
+                  if(moddir.equals("REL")){
+                      Mdir="REL16";
+                  }
+                  }else{
+                    if(moddir.equals("REL")){
+                      Mdir="REL8";
+                   }
+                  }
               }
+              else if(codop.matches("^[lL].*")||REL<=65535||REL>=-32768){
+                   if(moddir.equals("REL")){
+                      Mdir="REL16";
+                  }
+              }
+                }else{
+                  if(Operando.matches("^[0-9].*")){
+                  REL =Integer.parseInt(Operando, 16);
+                  if(REL<=255||REL>=-256){
+                    if(codop.matches("^[lL].*")){
+                  if(moddir.equals("REL")){
+                      Mdir="REL16";
+                  }
+                  }else{
+                        if(moddir.equals("REL")){
+                      Mdir="REL8";
+                        }
+                  }
+              }
+              else if(codop.matches("^[lL].*")||REL<=65535||REL>=-32768){
+                   if(moddir.equals("REL")){
+                      Mdir="REL16";
+                  }
+              }
+                  
+              }else{
+                     if(Operando.matches("^[a-zA-Z][a-zA-Z]*$")&&codop.matches("^[lL].*")){
+                         if(moddir.equals("REL")){
+                      Mdir="REL16";
+                          }
+                         }
+                     else{
+                         if(moddir.equals("REL")){
+                      Mdir="REL8";
+                          }
+                     }
+                  }
+              }
+                  
           }
           
           
