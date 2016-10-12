@@ -17,10 +17,11 @@ import java.util.StringTokenizer;
 public class Operando extends Practica3{
     
     
-    String Direccion(String Operando,String dir, int lin,String moddir,String codop){
+    
+    String Direccion(String Operando,String dir, int lin,String moddir,String codop,int operval){
         
         String  b=".err",Mdir="null";
-        
+        int x=0,y=0,z=0; 
         boolean banRel=false;
         try{
         File f =new File(dir+b);
@@ -30,12 +31,12 @@ public class Operando extends Practica3{
            // System.out.println("Codop antes: "+codop);
       if(Operando.matches("^\\%.*")||Operando.matches("^\\@.*")||Operando.matches("\\$.*")||Operando.matches("^\\#.*")||Operando.matches("^[0-9]+")||Operando.matches("^[a-zA-Z]+")||Operando.matches("^\\[.*")||Operando.matches("^\\-.*")||Operando.matches("^\\,.*")){
           /*   
-          int x = 32678;  
-          int y = ~x;   
-          int z = y + 1;
+          
         */  
+         
+          
           //System.out.println("Codop mod: "+codop);
-          //System.out.println("A2: "+z);
+          System.out.println("A2: "+z);
           //Directo
           if(Operando.matches("^\\%.+")||Operando.matches("^\\@[0-7]+")||Operando.matches("\\$[0-9A-Fa-f]*")||Operando.matches("^[0-9]+")){
           //DIR
@@ -80,6 +81,7 @@ public class Operando extends Practica3{
                           }
                           else{
                               Mdir="Ext";
+                              
                           }
                       }
                     //  System.out.println("Decimal"+Operando);
@@ -129,11 +131,16 @@ public class Operando extends Practica3{
                       
                   }
               }
+              if(Mdir!="null"){
+                  error.write("Linea: "+lin+" Error el Operando no cumple los requerimientos para Indexados contiene: "+Operando);
+                  error.newLine();
+              }
           }
           
           /////////////////////////////////////////////////////////////16 Bits Indirecto
           if(Operando.matches("^\\[[-0-9]*.*")){
               System.out.println("Operando[]: "+Operando);
+              
           if(Operando.matches("\\[([0-9])*,([X|x|Y|y|sp|SP|pc|PC])*\\]")){
               
               Mdir="[IDX2]";
@@ -145,9 +152,16 @@ public class Operando extends Practica3{
           }
           }
           ////////////////////////////////////////////////////////////Indexado Indirecto de Acumulador
+          if(Operando.matches("^\\[([D|d]){1,1},")){
+              
+              
           if(Operando.matches("\\[([D|d])*,([X|x|Y|y|sp|SP|pc|PC])*\\]")){
               Mdir="[D,IDX]";
               
+          }else{
+              error.write("Linea: "+lin+" Error el Operando no cumple los requerimientos para [D,IDX] contiene: "+Operando);
+              error.newLine();
+          }
           }
           
           ////////////////////////////////////////////////////////////Inmediato IMM8, IMM16
@@ -168,6 +182,11 @@ public class Operando extends Practica3{
                   if(moddir.equals("INM")){
                   Mdir="IMM8";
                   //return Mdir;
+                  if(IMM>=-256&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                      }
                   }
               }
               else if(IMM<=65535||-32768<=IMM){
@@ -175,6 +194,11 @@ public class Operando extends Practica3{
                   if(moddir.equals("INM")){
                   Mdir="IMM16";
                   //return Mdir;
+                  if(IMM>=-32768&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                      }
                   }
               }
                 }else{//sin base 
@@ -184,6 +208,11 @@ public class Operando extends Practica3{
                       if(moddir.equals("INM")){
                   Mdir="IMM8";
                   //return Mdir;
+                  if(IMM>=-256&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                      }
                       }
                   }
                   else if(IMM<=65535||-32768<=IMM){
@@ -191,6 +220,11 @@ public class Operando extends Practica3{
                       if(moddir.equals("INM")){
                   Mdir="IMM16";
                   //return Mdir;
+                  if(IMM>=-32768&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                      }
                       }
                   }
               }
@@ -210,16 +244,31 @@ public class Operando extends Practica3{
                   if(codop.matches("^[lL].*")){
                   if(moddir.equals("REL")){
                       Mdir="REL16";
+                      if(REL>=-256&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                      }
                   }
                   }else{
                     if(moddir.equals("REL")){
                       Mdir="REL8";
+                      if(REL>=-256&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                      }
                    }
                   }
               }
               else if(codop.matches("^[lL].*")||REL<=65535||REL>=-32768){
                    if(moddir.equals("REL")){
                       Mdir="REL16";
+                      if(REL>=-32768&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                      }
                   }
               }
                 }else{
@@ -229,16 +278,19 @@ public class Operando extends Practica3{
                     if(codop.matches("^[lL].*")){
                   if(moddir.equals("REL")){
                       Mdir="REL16";
+                      
                   }
                   }else{
                         if(moddir.equals("REL")){
                       Mdir="REL8";
+                       
                         }
                   }
               }
               else if(codop.matches("^[lL].*")||REL<=65535||REL>=-32768){
                    if(moddir.equals("REL")){
                       Mdir="REL16";
+                      
                   }
               }
                   
@@ -258,13 +310,24 @@ public class Operando extends Practica3{
                   
           }
           
-          
-          
+          if(z!=0&&operval==0)
+          {
+              File ins =new File("operando.asm");
+            FileWriter fwins=new FileWriter(ins,true);
+            BufferedWriter operando=new BufferedWriter(fwins);
+              System.out.println("Complemento A2: "+z);
+              operando.write(z);
+              operando.close();
+          }
+          if(Mdir=="null"){
+          error.write("Linea: "+lin+" Error no se encontro ningun modo de direccionamiento");
+          error.newLine();
+          }
          
       } 
        else{
           
-          error.write("Linea: "+lin+" Error el modo de Ddireccionamiento no es valido");
+          error.write("Linea: "+lin+" Error el modo de Direccionamiento no es valido");
           error.newLine();
           
       }
