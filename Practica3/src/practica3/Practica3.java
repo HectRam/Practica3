@@ -27,7 +27,7 @@ public class Practica3 {
         Scanner s = new Scanner(System.in);
         String thisLine,dir,a=".asm",b=".err",i=".inst",ax=null;
         thisLine = null;
-        int poslin=0,c=0,pos=0,banbuffer=0,compara=0,banCod=0,sioperI=2;
+        int poslin=0,c=0,pos=0,banbuffer=0,compara=0,banCod=0,sioperI=2,operval=0;
         espacios es;
         Operando op;
         String etiqueta = null, codop = null, operando = null, comentario=null,linToken=null,codoplin=null,sioperS=null,codopprue=null,Mdir=null;
@@ -188,12 +188,15 @@ public class Practica3 {
                                            BufferedWriter modosdir=new BufferedWriter(fwcod);
                                            if(moddir.equals("INH")){
                                                modosdir.write(moddir+" ");
+                                               operval=1;
                                            }
                                            if(moddir.equals("DTV")){
                                                modosdir.write(moddir+" ");
+                                               operval=1;
                                            }
                                            if(moddir.equals("INM")&&sioperI==0){
                                                modosdir.write(moddir+" ");
+                                               operval=1;
                                            }
                                            modosdir.close();
                                            }
@@ -242,7 +245,7 @@ public class Practica3 {
                                      operando=linToken;
                                  //    System.out.println("Operando  "+operando);
                                     
-                                    Mdir = op.Direccion(operando,dir,c,moddir,codop);
+                                    Mdir = op.Direccion(operando,dir,c,moddir,codop, operval);
                                     
                                      System.out.println("Modo de direccion "+Mdir);
                                      
@@ -383,17 +386,23 @@ public class Practica3 {
                       DataInputStream inputcod2 = new DataInputStream(fcod2);
                       BufferedReader brcod2 = new BufferedReader(new InputStreamReader(inputcod2));
                       codoplin=brcod2.readLine();//imprime los modos de direccionamiento
+                  
                       if(Mdir!=null){
                           codoplin=Mdir;
                       }
                       if(codoplin!="null"){
                       
+                      
                 //  System.out.println(c+"  ee  "+etiqueta+"  cc  "+codop+"  oo  "+operando);
                   instrucciones.write(c+"      "+etiqueta+"      "+codop+"      "+operando+"      "+codoplin);
                   instrucciones.newLine();
                       }
+                      
+                      
+                      
                   brcod2.close();
                   f2.delete();
+                 
                        }
                        }
                      if(errBan==true)
@@ -410,7 +419,7 @@ public class Practica3 {
                       DataInputStream inputcod2 = new DataInputStream(fcod2);
                       BufferedReader brcod2 = new BufferedReader(new InputStreamReader(inputcod2));
                       codoplin=brcod2.readLine();
-                      
+    
                       brcod2.close();
                       f2.delete();
                      }
@@ -424,6 +433,7 @@ public class Practica3 {
                      banCod=0;
                      sioperI=2;
                      Mdir=null;
+                     operval=0;
                      if(codop.equals("END")||codop.equals("End")||codop.equals("end")){//verifica si tiene End
                            banEnd = true;
                        }
