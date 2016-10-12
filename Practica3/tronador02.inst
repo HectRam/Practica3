@@ -1,0 +1,16 @@
+Linea---ETQ-----CODOP-----OPER-----modos
+3      null      INCA      null      INH 
+4      E2      LDAA      %11      DIR
+5      null      JMP      ,PC      IDX
+6      E3      CLRA      null      INH 
+10      null      BRSET      @15      DIR
+11      e4      LDAA      12      DIR
+12      null      CLR      10      DIR
+13      null      BLO      1000      REL8
+14      null      LBLO      0      REL16
+15      null      cLc      null      INM 
+16      null      lbgt      1      REL16
+17      m1      mul      null      INH 
+19      null      tfr      null      INH 
+22      null      ASRB      null      INH 
+27      null      tfr      null      INH 

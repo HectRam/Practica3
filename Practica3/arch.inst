@@ -1,0 +1,8 @@
+Linea---ETQ-----CODOP-----OPER-----modos
+4      dos      LDAA      @4732      null
+5      null      SWI      null      INH 
+10      tres      sWi      null      INH 
+Linea---ETQ-----CODOP-----OPER-----modos
+4      dos      LDAA      @4732      null
+5      null      SWI      null      INH 
+10      tres      sWi      null      INH 
