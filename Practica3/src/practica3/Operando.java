@@ -8,6 +8,8 @@ package practica3;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
@@ -18,9 +20,9 @@ public class Operando extends Practica3{
     
     
     
-    String Direccion(String Operando,String dir, int lin,String moddir,String codop,int operval){
-        
-        String  b=".err",Mdir="null";
+    String[] Direccion(String Operando,String dir, int lin,String moddir,String codop,int operval){
+        String[] Resultado = new String[] {"null", "null"};
+        String  b=".err",Mdir="null", Res="null";
         int x=0,y=0,z=0; 
         boolean banRel=false;
         try{
@@ -36,20 +38,28 @@ public class Operando extends Practica3{
          
           
           //System.out.println("Codop mod: "+codop);
-          System.out.println("A2: "+z);
+         // System.out.println("A2: "+z);
           //Directo
           if(Operando.matches("^\\%.+")||Operando.matches("^\\@[0-7]+")||Operando.matches("\\$[0-9A-Fa-f]*")||Operando.matches("^[0-9]+")){
           //DIR
-             
+             int DIR=0;
+              int tam=Operando.length();
               if(moddir.equals("DTV")){
                   Mdir=moddir;
               }else{
+                  if(Operando.matches("^[0-9]*$")){
+                  String dircad=Operando.substring(1,tam);
+                  DIR=Integer.parseInt(dircad,16);  
+                  if(DIR>=0||DIR<=255){
+                      
                   Mdir="DIR";
+                  
+                  }
+                  }
               }
               
               
-              int DIR=0;
-              int tam=Operando.length();
+              
               if(Operando.matches("^\\%.+")||Operando.matches("^\\@[0-7]+")||Operando.matches("\\$[0-9A-Fa-f]*")){
                   banRel=true;
               
@@ -173,8 +183,9 @@ public class Operando extends Practica3{
               //con base
               if(immcad.matches("^\\@.*")||immcad.matches("^\\%.*")||immcad.matches("^\\$.*"))
                 {
-                    
-                  immcad=Operando.substring(2,tam);
+               //empieza octal
+               if(immcad.matches("^\\@.*")){     
+               immcad=Operando.substring(2,tam);
                IMM =Integer.parseInt(immcad, 16);
               
               if(IMM<=255||-256<=IMM){
@@ -186,6 +197,7 @@ public class Operando extends Practica3{
                        x = IMM;  
                        y = ~x;   
                        z = y + 1;
+                       Res=dectooct(z);
                       }
                   }
               }
@@ -198,10 +210,76 @@ public class Operando extends Practica3{
                        x = IMM;  
                        y = ~x;   
                        z = y + 1;
+                       Res=dectooct(z);
                       }
                   }
               }
-                }else{//sin base 
+                }//termina octal
+               //entra binario
+              if(immcad.matches("^\\%.*")){     
+               immcad=Operando.substring(2,tam);
+               IMM =Integer.parseInt(immcad, 16);
+              
+              if(IMM<=255||-256<=IMM){
+                  //System.out.println("Entro A imm8");
+                  if(moddir.equals("INM")){
+                  Mdir="IMM8";
+                  //return Mdir;
+                  if(IMM>=-256&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectobin(z);
+                      }
+                  }
+              }
+              else if(IMM<=65535||-32768<=IMM){
+                  //System.out.println("Entro A imm16");
+                  if(moddir.equals("INM")){
+                  Mdir="IMM16";
+                  //return Mdir;
+                  if(IMM>=-32768&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectobin(z);
+                      }
+                  }
+              }
+                }//termina binario
+              //entra hexadecimal 
+              if(immcad.matches("^\\$.*")){     
+               immcad=Operando.substring(2,tam);
+               IMM =Integer.parseInt(immcad, 16);//transforma de hexa a decimal para evaluar 
+              //System.out.println("Hexadecimal"+IMM);
+              if(IMM<=255||-256<=IMM){
+                  //System.out.println("Entro A imm8");
+                  if(moddir.equals("INM")){
+                  Mdir="IMM8";
+                  //return Mdir;
+                  if(IMM>=-256&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectohex(z);
+                      }
+                  }
+              }
+              else if(IMM<=65535||-32768<=IMM){
+                  //System.out.println("Entro A imm16");
+                  if(moddir.equals("INM")){
+                  Mdir="IMM16";
+                  //return Mdir;
+                  if(IMM>=-32768&&IMM<=-1){
+                       x = IMM;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectohex(z);
+                      }
+                  }
+              }
+                }//termina hexadecimal
+          }else{//sin base 
                   IMM =Integer.parseInt(immcad, 16);
                   if(IMM<=255||-256<=IMM){
                   //System.out.println("Entro A imm8");
@@ -212,6 +290,7 @@ public class Operando extends Practica3{
                        x = IMM;  
                        y = ~x;   
                        z = y + 1;
+                       
                       }
                       }
                   }
@@ -237,7 +316,8 @@ public class Operando extends Practica3{
            //  System.out.println("moddir: "+moddir);
               if(Operando.matches("^\\@.*")||Operando.matches("^\\%.*")||Operando.matches("^\\$.*"))
                 {
-                    
+                    //Entra Octal
+                    if(Operando.matches("^\\@.*")){
               String relcad=Operando.substring(1,tam);
               REL =Integer.parseInt(relcad, 16);
               if(REL<=255||REL>=-256){
@@ -248,6 +328,7 @@ public class Operando extends Practica3{
                        x = REL;  
                        y = ~x;   
                        z = y + 1;
+                       Res=dectooct(z);
                       }
                   }
                   }else{
@@ -257,6 +338,7 @@ public class Operando extends Practica3{
                        x = REL;  
                        y = ~x;   
                        z = y + 1;
+                       Res=dectooct(z);
                       }
                    }
                   }
@@ -268,10 +350,91 @@ public class Operando extends Practica3{
                        x = REL;  
                        y = ~x;   
                        z = y + 1;
+                       Res=dectooct(z);
                       }
                   }
               }
-                }else{
+                }//Termina Octal
+                    
+                  //Empieza Binario
+                 if(Operando.matches("^\\%.*")){
+              String relcad=Operando.substring(1,tam);
+              REL =Integer.parseInt(relcad, 16);
+              if(REL<=255||REL>=-256){
+                  if(codop.matches("^[lL].*")){
+                  if(moddir.equals("REL")){
+                      Mdir="REL16";
+                      if(REL>=-256&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectobin(z);
+                      }
+                  }
+                  }else{
+                    if(moddir.equals("REL")){
+                      Mdir="REL8";
+                      if(REL>=-256&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectobin(z);
+                      }
+                   }
+                  }
+              }
+              else if(codop.matches("^[lL].*")||REL<=65535||REL>=-32768){
+                   if(moddir.equals("REL")){
+                      Mdir="REL16";
+                      if(REL>=-32768&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectobin(z);
+                      }
+                  }
+              }
+                }//Termina Binario
+                 //Empieza Hexadecimal
+                 if(Operando.matches("^\\$.*")){
+              String relcad=Operando.substring(1,tam);
+              REL =Integer.parseInt(relcad, 16);
+              if(REL<=255||REL>=-256){
+                  if(codop.matches("^[lL].*")){
+                  if(moddir.equals("REL")){
+                      Mdir="REL16";
+                      if(REL>=-256&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectohex(z);
+                      }
+                  }
+                  }else{
+                    if(moddir.equals("REL")){
+                      Mdir="REL8";
+                      if(REL>=-256&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectohex(z);
+                      }
+                   }
+                  }
+              }
+              else if(codop.matches("^[lL].*")||REL<=65535||REL>=-32768){
+                   if(moddir.equals("REL")){
+                      Mdir="REL16";
+                      if(REL>=-32768&&REL<=-1){
+                       x = REL;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectohex(z);
+                      }
+                  }
+              }
+                }//Termina Hexadecimal
+                }else{//sin base
                   if(Operando.matches("^[0-9].*")){
                   REL =Integer.parseInt(Operando, 16);
                   if(REL<=255||REL>=-256){
@@ -310,15 +473,7 @@ public class Operando extends Practica3{
                   
           }
           
-          if(z!=0&&operval==0)
-          {
-              File ins =new File("operando.asm");
-            FileWriter fwins=new FileWriter(ins,true);
-            BufferedWriter operando=new BufferedWriter(fwins);
-              System.out.println("Complemento A2: "+z);
-              operando.write(z);
-              operando.close();
-          }
+          
           if(Mdir=="null"){
           error.write("Linea: "+lin+" Error no se encontro ningun modo de direccionamiento");
           error.newLine();
@@ -338,7 +493,36 @@ public class Operando extends Practica3{
             System.out.println("Hubo un problema en los modos de direccionamiento: "+e);
             
         }
-        
-      return Mdir;
+        System.out.println("Mdir: "+Mdir+"Res op: "+Res);
+        Resultado[0]=Mdir;
+        Resultado[1]=Res;
+        System.out.println("Mdir: "+Resultado[0]+"Res op: "+Resultado[1]);
+      return Resultado;
     }
+    
+    public static int hextodec(String hexdecnum)
+    {
+             int decimal = Integer.parseInt(hexdecnum, 16);
+             return decimal;
+    }
+    
+    public static String dectohex(int dec)
+    {
+        String hex = Integer.toHexString(dec);
+        return hex;
+    }
+    public String dectobin(int dec){
+        
+        
+        String bin = Integer.toBinaryString(dec);
+        
+        return bin;
+    }
+    public String dectooct(int dec){
+        
+        String oct = Integer.toOctalString(dec);
+        return oct;
+    }
+  
+    
 }
