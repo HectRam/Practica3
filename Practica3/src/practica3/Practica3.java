@@ -26,12 +26,13 @@ public class Practica3 {
         
         Scanner s = new Scanner(System.in);
         String thisLine,dir,a=".asm",b=".err",i=".inst",ax=null;
+        String[] Resultado = new String[] {"null", "null"};
         thisLine = null;
         int poslin=0,c=0,pos=0,banbuffer=0,compara=0,banCod=0,sioperI=2,operval=0;
         espacios es;
         Operando op;
         String etiqueta = null, codop = null, operando = null, comentario=null,linToken=null,codoplin=null,sioperS=null,codopprue=null,Mdir=null;
-        String exEt=null,exCod=null,moddir=null,codcal=null,bytescal=null,bytesxcal=null,totbytes=null,samecod=null,dircod=null,samecod2=null;
+        String exEt=null,exCod=null,moddir=null,codcal=null,bytescal=null,bytesxcal=null,totbytes=null,samecod=null,dircod=null,samecod2=null,Res="null";
         Vector<String> cadena;
         cadena = new Vector<>();
         System.out.print("Ruta del archivo? ");
@@ -75,7 +76,7 @@ public class Practica3 {
 	                c++;
                        comentario=" ";    
                        
-                  // System.out.println("Linea       \n"+thisLine);
+                   System.out.println("Linea       \n"+thisLine);
                    StringTokenizer Token = new StringTokenizer(thisLine);
                    
                    while(Token.hasMoreTokens())
@@ -109,7 +110,7 @@ public class Practica3 {
                          linToken=" ";
                          while(at.hasMoreTokens()){
                              ax=at.nextToken();
-                     //      System.out.println("Ax    "+ax);
+                           //System.out.println("Ax    "+ax);
                             cadena.add(ax);
                            comentarios.write(ax+" ");
                          }
@@ -206,7 +207,7 @@ public class Practica3 {
                                    
                                    
                              }
-                             dsaux.close();
+                             dsaux.close(); 
                              
                          }catch(Exception r){
                              System.out.println("Hubo un error en el Tabop "+r);
@@ -245,9 +246,10 @@ public class Practica3 {
                                      operando=linToken;
                                  //    System.out.println("Operando  "+operando);
                                     
-                                    Mdir = op.Direccion(operando,dir,c,moddir,codop, operval);
-                                    
-                                     System.out.println("Modo de direccion "+Mdir);
+                                    Resultado = op.Direccion(operando,dir,c,moddir,codop, operval);
+                                    Mdir=Resultado[0];
+                                    Res=Resultado[1];
+                                     //System.out.println("Modo de direccion "+Mdir);
                                      
                                      if(codop.equals(" ")){
                                          
@@ -286,9 +288,9 @@ public class Practica3 {
                                            // System.out.println("Lin token eti: "+linToken);
                                            // etiqueta=linToken;
                                             if(poslin!=0&&thisLine.charAt(poslin)!=' '&&poslin>2){
-                                            //   System.out.println("com pos"+thisLine.charAt(poslin)+"Npos "+poslin);
+                                              System.out.println("com pos"+thisLine.charAt(poslin)+"Npos "+poslin);
                                                exEt=thisLine.substring(0,poslin);
-                                               //System.out.println("Etiqueta "+exEt);
+                                              System.out.println("Etiqueta "+exEt);
                                             }
                                             
                                             //System.out.println("Et despues! "+exEt);
@@ -391,11 +393,17 @@ public class Practica3 {
                           codoplin=Mdir;
                       }
                       if(codoplin!="null"){
-                      
-                      
-                //  System.out.println(c+"  ee  "+etiqueta+"  cc  "+codop+"  oo  "+operando);
+                      if(Res!="null"){
+                     //inserta resultado de Operando 
+                      operando=Res;
+                 // System.out.println(c+"  ee  "+etiqueta+"  cc  "+codop+"  oo  "+operando+"      "+codoplin);
                   instrucciones.write(c+"      "+etiqueta+"      "+codop+"      "+operando+"      "+codoplin);
                   instrucciones.newLine();
+                      }else{
+                      //  System.out.println(c+"  ee  "+etiqueta+"  cc  "+codop+"  oo  "+operando+"      "+codoplin);
+                  instrucciones.write(c+"      "+etiqueta+"      "+codop+"      "+operando+"      "+codoplin);
+                  instrucciones.newLine();  
+                      }
                       }
                       
                       
