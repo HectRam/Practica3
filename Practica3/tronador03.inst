@@ -1,0 +1,26 @@
+Linea---ETQ-----CODOP-----OPER-----modos
+4      etq4      INCA      null      INH 
+6      etq6      clra      null      INH 
+7      null      CLR      10      DIR
+8      null      JmP      20      DIR
+9      null      LDAA      255      DIR
+10      null      LDAA      256      Ext
+11      null      LDAA      ffffff00      EXT
+12      null      BLO      1000      REL8
+35      null      LDAA      ,X      IDX
+38      null      inca      null      INH 
+43      null      jmp      ,PC      IDX
+44      null      JMP      [0,Y]      [IDX2]
+45      null      JMP      [,Y]      [IDX2]
+48      null      bitb      256      Ext
+56      null      lbvs      65536      REL16
+58      null      clc      null      INM 
+64      null      ASLD      null      INH 
+65      null      BGND      null      INH 
+72      null      SUBA      4096      Ext
+74      null      LDAA      fffffe01      EXT
+75      null      LDAA      ffff0001      EXT
+76      null      ADDB      fffff001      EXT
+78      null      SUBA      180      DIR
+82      null      IDIV      null      INH 
+83      null      DEX      null      INH 

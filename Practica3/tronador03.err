@@ -1,0 +1,71 @@
+Linea: 5 Error no se encontro ningun modo de direccionamiento
+Linea: 11 Error no se encontro ningun modo de direccionamiento
+Linea: 14 Error no se encontro ningun modo de direccionamiento
+Linea: 15 Error no se encontro ningun modo de direccionamiento
+Linea: 16 Error el Operando no cumple los requerimientos para [IDX2] contiene: [100,X
+Linea: 16 Error no se encontro ningun modo de direccionamiento
+Linea: 17 Error el modo de Direccionamiento no es valido
+Linea: 19 Error el modo de Direccionamiento no es valido
+Linea: 21 Error el modo de Direccionamiento no es valido
+Linea: 22 Error no se encontro ningun modo de direccionamiento
+Linea: 23 Error el Operando no cumple los requerimientos para [IDX2] contiene: [-1000,PC]
+Linea: 23 Error no se encontro ningun modo de direccionamiento
+Linea: 29 Error el modo de Direccionamiento no es valido
+Linea: 34 Error el modo de Direccionamiento no es valido
+Linea: 35 Error el Operando no cumple los requerimientos para Indexados contiene: ,X
+Linea: 36 Error no se encontro ningun modo de direccionamiento
+Linea: 39 Error no se encontro ningun modo de direccionamiento
+Linea: 40 Error no se encontro ningun modo de direccionamiento
+Linea: 41 Error el modo de Direccionamiento no es valido
+Linea: 42 Error el modo de Direccionamiento no es valido
+Linea: 43 Error el Operando no cumple los requerimientos para Indexados contiene: ,PC
+Linea: 46 Error el Operando no cumple los requerimientos para [IDX2] contiene: [10,Y,]
+Linea: 46 Error no se encontro ningun modo de direccionamiento
+Linea: 47 Error el modo de Direccionamiento no es valido
+Linea: 49 Error el modo de Direccionamiento no es valido
+Linea: 51 Error el modo de Direccionamiento no es valido
+Linea: 52 Error el modo de Direccionamiento no es valido
+Linea: 53 Error el modo de Direccionamiento no es valido
+Linea: 54 Error el modo de Direccionamiento no es valido
+Linea: 60 Error no se encontro ningun modo de direccionamiento
+Linea: 61 Error no se encontro ningun modo de direccionamiento
+Linea: 62 Error no se encontro ningun modo de direccionamiento
+Linea: 66 Error no se encontro ningun modo de direccionamiento
+Linea: 67 Error no se encontro ningun modo de direccionamiento
+Linea: 68 Error no se encontro ningun modo de direccionamiento
+Linea: 69 Error no se encontro ningun modo de direccionamiento
+Linea: 70 Error no se encontro ningun modo de direccionamiento
+Linea: 71 Error no se encontro ningun modo de direccionamiento
+Linea: 77 Error el modo de Direccionamiento no es valido
+Linea: 79 Error no se encontro ningun modo de direccionamiento
+Linea: 80 Error no se encontro ningun modo de direccionamiento
+Linea: 81 Error no se encontro ningun modo de direccionamiento
+Linea: 87 Error no se encontro ningun modo de direccionamiento
+Linea: 88 Error no se encontro ningun modo de direccionamiento
+Linea: 90 Error no se encontro ningun modo de direccionamiento
+Linea: 91 Error no se encontro ningun modo de direccionamiento
+Linea: 92 Error no se encontro ningun modo de direccionamiento
+Linea: 94 Error no se encontro ningun modo de direccionamiento
+Linea: 95 Error no se encontro ningun modo de direccionamiento
+Linea: 2 Error codigo no encontrado
+Linea: 3 Error codigo no encontrado
+Linea: 5 Error la instruccion del codop no debe de tener operando
+Linea: 18 Error la instruccion del codop debe de tener operando
+Linea: 30 Error codigo no encontrado
+Linea: 31 Error codigo no encontrado
+Linea: 32 Error codigo no encontrado
+Linea: 33 Error codigo no encontrado
+Linea: 50 Error codigo no encontrado
+Linea: 55 Error codigo no encontrado
+Linea: 57 Error codigo no encontrado
+Linea: 59 Error codigo no encontrado
+Linea: 63 Error codigo no encontrado
+Linea: 73 Error no se puede tener tener etiqueta sin codop
+Linea: 73 Error codigo no encontrado
+Linea: 84 Error codigo no encontrado
+Linea: 86 Error codigo no encontrado
+Linea: 89 Error codigo no encontrado
+Linea: 93 Error codigo no encontrado
+Linea: 96 Error codigo no encontrado
+Linea: 98 Error codigo no encontrado
+Error: no se encontro el final del archivo(End)
