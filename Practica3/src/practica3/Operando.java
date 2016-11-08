@@ -82,6 +82,12 @@ public class Operando extends Practica3{
                        int EXT=Integer.parseInt(Hexcad,16);
                        if(EXT>=256){
                            Mdir="EXT";
+                           if(!Hexcad.matches("^0.*")){
+                       x = EXT;  
+                       y = ~x;   
+                       z = y + 1;
+                       Res=dectohex(z);
+                      }
                        }
                   }else{
                       int op=Integer.parseInt(Operando);
@@ -257,7 +263,7 @@ public class Operando extends Practica3{
                   if(moddir.equals("INM")){
                   Mdir="IMM8";
                   //return Mdir;
-                  if(IMM>=-256&&IMM<=-1){
+                  if(IMM>=-256&&IMM<=-1||immcad.matches("^0.*")){
                        x = IMM;  
                        y = ~x;   
                        z = y + 1;
@@ -270,7 +276,7 @@ public class Operando extends Practica3{
                   if(moddir.equals("INM")){
                   Mdir="IMM16";
                   //return Mdir;
-                  if(IMM>=-32768&&IMM<=-1){
+                  if(IMM>=-32768&&IMM<=-1||immcad.matches("^0.*")){
                        x = IMM;  
                        y = ~x;   
                        z = y + 1;
@@ -403,7 +409,7 @@ public class Operando extends Practica3{
                   if(codop.matches("^[lL].*")){
                   if(moddir.equals("REL")){
                       Mdir="REL16";
-                      if(REL>=-256&&REL<=-1){
+                      if(REL>=-256&&REL<=-1||relcad.matches("^0.*")){
                        x = REL;  
                        y = ~x;   
                        z = y + 1;
@@ -413,7 +419,7 @@ public class Operando extends Practica3{
                   }else{
                     if(moddir.equals("REL")){
                       Mdir="REL8";
-                      if(REL>=-256&&REL<=-1){
+                      if(REL>=-256&&REL<=-1||relcad.matches("^0.*")){
                        x = REL;  
                        y = ~x;   
                        z = y + 1;
@@ -425,11 +431,12 @@ public class Operando extends Practica3{
               else if(codop.matches("^[lL].*")||REL<=65535||REL>=-32768){
                    if(moddir.equals("REL")){
                       Mdir="REL16";
-                      if(REL>=-32768&&REL<=-1){
+                      if(REL>=-32768&&REL<=-1||relcad.matches("^0.*")){
                        x = REL;  
                        y = ~x;   
                        z = y + 1;
                        Res=dectohex(z);
+                       
                       }
                   }
               }
